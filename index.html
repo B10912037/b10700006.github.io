@@ -114,7 +114,7 @@
     if(!connected)
       return;
 
-    myCharacteristic.writeValue()
+    myCharacteristic.readValue()
     .then(_ => {
       log('update done, now value is ' + value[]);
     })
