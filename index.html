@@ -115,12 +115,9 @@
       return;
 
     myCharacteristic.readValue()
-    .then(value => {
+    .then( value => {
       log('update done, now value is ' + value.getUint8(0));
     })
-    .catch(error => { 
-      log(error); 
-    });
   }
 
   function _update()
