@@ -109,6 +109,19 @@
       log(error); 
     });
   }
+	  
+  function _update1() {
+    if(!connected)
+      return;
+
+    myCharacteristic.writeValue()
+    .then(_ => {
+      log('update done, now value is ' + value);
+    })
+    .catch(error => { 
+      log(error); 
+    });
+  }
 
   function _update()
   {
@@ -117,6 +130,7 @@
       document.querySelector('#hint').innerText = "Hint: Web Bluetooth API is not available on current browser";
       document.querySelector('#connect').classList.add("disabled");
       document.querySelector('#toggle').classList.add("disabled");
+      document.querySelector('#update').classList.add("disabled");
       return;
     }
 
@@ -130,6 +144,9 @@
       document.querySelector('#toggle').classList.remove("disabled");
       document.querySelector('#toggle').classList.add("btn-primary");
       document.querySelector('#toggle').onclick = _toggle;
+	  document.querySelector('#update').classList.remove("disabled");
+      document.querySelector('#update').classList.add("btn-primary");
+      document.querySelector('#update').onclick = _update1;
     }
     else
     {
@@ -140,6 +157,8 @@
       document.querySelector('#hint').innerText = "Hint: Press Connect to connect to BLE";
       document.querySelector('#toggle').classList.add("disabled");
       document.querySelector('#toggle').classList.remove("btn-primary");
+	  document.querySelector('#update').classList.add("disabled");
+      document.querySelector('#update').classList.remove("btn-primary");
     }
   }
 
@@ -157,6 +176,8 @@
       <button id='connect' type="button" class="btn btn-block">Connect</button>
       <br>
       <button id='toggle' type="button" class="btn btn-block">Toggle</button>
+	  <br>
+      <button id='update' type="button" class="btn btn-block">Updata</button>
     </div>
     <div class="col-sm-9">
       <h4 id='state'></h4>
