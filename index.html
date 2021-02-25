@@ -110,7 +110,7 @@
     });
   }
 	  
-  function _update1() {
+  function _read() {
     if(!connected)
       return;
 
@@ -144,9 +144,9 @@
       document.querySelector('#toggle').classList.remove("disabled");
       document.querySelector('#toggle').classList.add("btn-primary");
       document.querySelector('#toggle').onclick = _toggle;
-	  document.querySelector('#update').classList.remove("disabled");
+      document.querySelector('#update').classList.remove("disabled");
       document.querySelector('#update').classList.add("btn-primary");
-      document.querySelector('#update').onclick = _update1;
+      document.querySelector('#update').onclick = _read;
     }
     else
     {
@@ -157,7 +157,7 @@
       document.querySelector('#hint').innerText = "Hint: Press Connect to connect to BLE";
       document.querySelector('#toggle').classList.add("disabled");
       document.querySelector('#toggle').classList.remove("btn-primary");
-	  document.querySelector('#update').classList.add("disabled");
+      document.querySelector('#update').classList.add("disabled");
       document.querySelector('#update').classList.remove("btn-primary");
     }
   }
