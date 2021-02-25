@@ -114,9 +114,9 @@
     if(!connected)
       return;
 
-    myCharacteristic.readValue()
+    return myCharacteristic.readValue()
     .then(_ => {
-      log('update done, now value is ' + value);
+      log('update done, now value is ' + value.getUint8(0));
     })
     .catch(error => { 
       log(error); 
