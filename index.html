@@ -119,6 +119,33 @@
       log('update done, now value is ' + value.getUint8(0));
     })
   }
+	  
+  function _notify() {
+    if(!connected)
+      return;
+	  
+    myCharacteristic.startNotifications()
+    .then(_ => {
+      log('Notifications started');
+      myCharacteristic.addEventListener('characteristicvaluechanged',
+          handleNotifications);
+    })
+    .catch(error => { 
+      log(error); 
+    });
+  }
+	  
+function handleNotifications(event) {
+  let value = event.target.value;
+  let a = [];
+  // Convert raw data bytes to hex values just for the sake of showing something.
+  // In the "real" world, you'd use data.getUint8, data.getUint16 or even
+  // TextDecoder to process raw data bytes.
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  log('> ' + a.join(' '));
+}
 
   function _update()
   {
@@ -128,6 +155,7 @@
       document.querySelector('#connect').classList.add("disabled");
       document.querySelector('#toggle').classList.add("disabled");
       document.querySelector('#update').classList.add("disabled");
+      document.querySelector('#notify').classList.add("disabled");
       return;
     }
 
@@ -144,6 +172,9 @@
       document.querySelector('#update').classList.remove("disabled");
       document.querySelector('#update').classList.add("btn-primary");
       document.querySelector('#update').onclick = _read;
+      document.querySelector('#notify').classList.remove("disabled");
+      document.querySelector('#notify').classList.add("btn-primary");
+      document.querySelector('#notify').onclick = _notify;
     }
     else
     {
@@ -156,6 +187,8 @@
       document.querySelector('#toggle').classList.remove("btn-primary");
       document.querySelector('#update').classList.add("disabled");
       document.querySelector('#update').classList.remove("btn-primary");
+      document.querySelector('#notify').classList.add("disabled");
+      document.querySelector('#notify').classList.remove("btn-primary");
     }
   }
 
@@ -173,8 +206,10 @@
       <button id='connect' type="button" class="btn btn-block">Connect</button>
       <br>
       <button id='toggle' type="button" class="btn btn-block">Toggle</button>
-	  <br>
+      <br>
       <button id='update' type="button" class="btn btn-block">Updata</button>
+      <br>
+      <button id='notify' type="button" class="btn btn-block">Start NotificationsUpdata</button>
     </div>
     <div class="col-sm-9">
       <h4 id='state'></h4>
