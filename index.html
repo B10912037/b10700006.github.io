@@ -112,7 +112,7 @@
       var v = Uint8Array.of(StatusValue);
       myCharacteristic.writeValue(v)
         .then(_ => {
-          log('toggle done, new value is ' + StatusValue);
+          log('data sent, new value is ' + StatusValue);
         })
         .catch(error => {
           log(error);
@@ -126,6 +126,9 @@
       myCharacteristic.startNotifications()
         .then(_ => {
           log('notifications started');
+          document.querySelector('#notify').innerText = "Reciving";
+          document.querySelector('#notify').classList.add("disabled");
+          document.querySelector('#notify').classList.remove("btn-primary");
           notified = true;
           myCharacteristic.addEventListener('characteristicvaluechanged',
             handleNotifications);
@@ -138,7 +141,7 @@
 
     function handleNotifications(event) {
       let value = event.target.value;
-      StatusValue = value;
+      StatusValue = value.getUint8(0);
       let a = [];
       // Convert raw data bytes to hex values just for the sake of showing something.
       // In the "real" world, you'd use data.getUint8, data.getUint16 or even
@@ -146,7 +149,7 @@
       for (let i = 0; i < value.byteLength; i++) {
         a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
       }
-      log('data updated, now value is ' + a.join(' '));
+      log('data recived, now value is ' + a.join(' '));
     }
 
     function _update() {
