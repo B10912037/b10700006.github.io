@@ -60,6 +60,16 @@
           log('Value is ' + value.getUint8(0));
           connected = true;
           StatusValue = value.getUint8(0);
+          return myCharacteristic.startNotifications();
+        })
+        .then(_ => {
+          log('notifications started');
+          document.querySelector('#notify').innerText = "Receiving";
+          document.querySelector('#notify').classList.add("disabled");
+          document.querySelector('#notify').classList.remove("btn-primary");
+          notified = true;
+          myCharacteristic.addEventListener('characteristicvaluechanged',
+          handleNotifications);
           _update();
         })
         .catch(error => {
@@ -179,10 +189,10 @@
         document.querySelector('#send').classList.remove("disabled");
         document.querySelector('#send').classList.add("btn-primary");
         document.querySelector('#send').onclick = _send;
-        document.querySelector('#notify').innerText = "Not Receiving";
-        document.querySelector('#notify').classList.remove("disabled");
-        document.querySelector('#notify').classList.add("btn-primary");
-        document.querySelector('#notify').onclick = _notify;
+        //document.querySelector('#notify').innerText = "Not Receiving";
+        //document.querySelector('#notify').classList.remove("disabled");
+        //document.querySelector('#notify').classList.add("btn-primary");
+        //document.querySelector('#notify').onclick = _notify;
       }
       else {
         document.querySelector('#connect').onclick = _connect;
@@ -199,11 +209,11 @@
         document.querySelector('#notify').innerText = "Not Receiving";
         document.querySelector('#notify').classList.remove("btn-primary");
       }
-      if (notified) {
+      /*if (notified) {
         document.querySelector('#notify').innerText = "Receiving";
         document.querySelector('#notify').classList.add("disabled");
         document.querySelector('#notify').classList.remove("btn-primary");
-      }
+      }*/
     }
 
   </script>
