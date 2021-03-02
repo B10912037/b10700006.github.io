@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Test Web BLE</title>
   <meta charset="utf-8">
@@ -10,215 +11,218 @@
 
   <script>
 
-  var _serv_uuid = '0000FFE0-0000-1000-8000-00805F9B34FB'.toLowerCase();
-  var _char_uuid = '0000FFE1-0000-1000-8000-00805F9B34FB'.toLowerCase();
+    var _serv_uuid = '0000FFE0-0000-1000-8000-00805F9B34FB'.toLowerCase();
+    var _char_uuid = '0000FFE1-0000-1000-8000-00805F9B34FB'.toLowerCase();
 
-  var bluetoothDevice = null;
-  var connected = false;
-  var ledValue;
-  var myCharacteristic;
+    var bluetoothDevice = null;
+    var connected = false;
+    var StatusValue;
+    var notified = false;
+    var myCharacteristic;
 
-  function log(v)
-  {
-    var line = Array.prototype.slice.call(arguments).map(function(argument) {
-      return typeof argument === 'string' ? argument : JSON.stringify(argument);
-    }).join(' ');
+    function log(v) {
+      var line = Array.prototype.slice.call(arguments).map(function (argument) {
+        return typeof argument === 'string' ? argument : JSON.stringify(argument);
+      }).join(' ');
 
-    document.querySelector('#log').textContent += line + '\n';
-    console.log(line);
-  }
+      document.querySelector('#log').textContent += line + '\n';
+      console.log(line);
+    }
 
-  function _connect() {
-    document.querySelector('#log').textContent = '';
-    log('Requesting any Bluetooth Device...');
-    navigator.bluetooth.requestDevice({
-     // filters: [...] <- Prefer filters to save energy & show relevant devices.
+    function _connect() {
+      document.querySelector('#log').textContent = '';
+      log('Requesting any Bluetooth Device...');
+      navigator.bluetooth.requestDevice({
+        // filters: [...] <- Prefer filters to save energy & show relevant devices.
         acceptAllDevices: true,
         optionalServices: [_serv_uuid]
+      })
+        .then(device => {
+          log('Connecting to GATT Server...');
+          bluetoothDevice = device;
+          bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+          return device.gatt.connect();
         })
-    .then(device => {
-      log('Connecting to GATT Server...');
-      bluetoothDevice = device;
-      bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
-      return device.gatt.connect();
-    })
-    .then(server => {
-      log('Getting Service...');
-      return server.getPrimaryService(_serv_uuid);
-    })
-    .then(service => {
-      log('Getting Characteristic...');
-      return service.getCharacteristic(_char_uuid);
-    })
-    .then(characteristic => {
-      log('Reading Characteristic values...');
-      myCharacteristic = characteristic;
-      return characteristic.readValue();
-    })
-    .then(value => {
-      log('Value is ' + value.getUint8(0));
-      connected = true;
-      ledValue = value.getUint8(0);
+        .then(server => {
+          log('Getting Service...');
+          return server.getPrimaryService(_serv_uuid);
+        })
+        .then(service => {
+          log('Getting Characteristic...');
+          return service.getCharacteristic(_char_uuid);
+        })
+        .then(characteristic => {
+          log('Reading Characteristic values...');
+          myCharacteristic = characteristic;
+          return characteristic.readValue();
+        })
+        .then(value => {
+          log('Value is ' + value.getUint8(0));
+          connected = true;
+          StatusValue = value.getUint8(0);
+          _update();
+        })
+        .catch(error => {
+          if (bluetoothDevice && bluetoothDevice.gatt.connected) {
+            bluetoothDevice.gatt.disconnect();
+          }
+          bluetoothDevice = null;
+          connected = false;
+          log("Error:", error);
+          _update();
+        });
+
+    }
+
+    function onDisconnected(event) {
+      log("Disconnected by remote device!");
+      bluetoothDevice = null;
+      connected = false;
+      notified = false;
       _update();
-    })
-    .catch(error => {
-      if (bluetoothDevice && bluetoothDevice.gatt.connected) {
-        bluetoothDevice.gatt.disconnect();
+    }
+
+    function _disconnect() {
+      log("_disconnect");
+      if (!connected) {
+        return;
       }
-      bluetoothDevice = null;
-      connected = false;
-      log("Error:", error); 
+      log('Disconnecting from Bluetooth Device...');
+      if (bluetoothDevice.gatt.connected) {
+        bluetoothDevice.gatt.disconnect();
+      } else {
+        log('> Bluetooth Device is already disconnected');
+      }
       _update();
-    });
-
-  }
-
-  function onDisconnected(event) {
-      log("Disconnected by remote device!"); 
-      bluetoothDevice = null;
-      connected = false;
-      _update();    
-  }
-
-  function _disconnect() {
-    log("_disconnect");
-    if (!connected) {
-      return;
-    }
-    log('Disconnecting from Bluetooth Device...');
-    if (bluetoothDevice.gatt.connected) {
-      bluetoothDevice.gatt.disconnect();
-    } else {
-      log('> Bluetooth Device is already disconnected');
-    }
-    _update();
-  }
-
-  function _toggle() {
-    if(!connected)
-      return;
-
-    ledValue = ledValue == 0 ? 1 : 0;
-    // Writing 1 is the signal to reset energy expended.
-    var v = Uint8Array.of(ledValue);
-    myCharacteristic.writeValue(v)
-    .then(_ => {
-      log('toggle done, new value is ' + ledValue);
-    })
-    .catch(error => { 
-      log(error); 
-    });
-  }
-	  
-  function _read() {
-    if(!connected)
-      return;
-
-    myCharacteristic.readValue()
-    .then( value => {
-      log('update done, now value is ' + value.getUint8(0));
-    })
-  }
-	  
-  function _notify() {
-    if(!connected)
-      return;
-	  
-    myCharacteristic.startNotifications()
-    .then(_ => {
-      log('notifications started');
-      myCharacteristic.addEventListener('characteristicvaluechanged',
-          handleNotifications);
-    })
-    .catch(error => { 
-      log(error); 
-    });
-  }
-	  
-function handleNotifications(event) {
-  let value = event.target.value;
-  let a = [];
-  // Convert raw data bytes to hex values just for the sake of showing something.
-  // In the "real" world, you'd use data.getUint8, data.getUint16 or even
-  // TextDecoder to process raw data bytes.
-  for (let i = 0; i < value.byteLength; i++) {
-    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
-  }
-  log('data updated, now value is ' + a.join(' '));
-}
-
-  function _update()
-  {
-    if(!navigator.bluetooth) {
-      document.querySelector('#state').innerText = "Not supported!";
-      document.querySelector('#hint').innerText = "Hint: Web Bluetooth API is not available on current browser";
-      document.querySelector('#connect').classList.add("disabled");
-      document.querySelector('#toggle').classList.add("disabled");
-      document.querySelector('#update').classList.add("disabled");
-      document.querySelector('#notify').classList.add("disabled");
-      return;
     }
 
-    if(connected)
-    {
-      document.querySelector('#connect').onclick = _disconnect;
-      document.querySelector('#connect').innerText = "Disconnect";
-      document.querySelector('#connect').classList.remove("btn-primary");
-      document.querySelector('#state').innerText = "Connected";
-      document.querySelector('#hint').innerText = "Hint: Press Toggle to switch on/off of LED on BLE";
-      document.querySelector('#toggle').classList.remove("disabled");
-      document.querySelector('#toggle').classList.add("btn-primary");
-      document.querySelector('#toggle').onclick = _toggle;
-      document.querySelector('#update').classList.remove("disabled");
-      document.querySelector('#update').classList.add("btn-primary");
-      document.querySelector('#update').onclick = _read;
-      document.querySelector('#notify').classList.remove("disabled");
-      document.querySelector('#notify').classList.add("btn-primary");
-      document.querySelector('#notify').onclick = _notify;
+    function _toggle() {
+      if (!connected)
+        return;
+
+      StatusValue = StatusValue == 0 ? 1 : 0;
     }
-    else
-    {
-      document.querySelector('#connect').onclick = _connect;
-      document.querySelector('#connect').innerText = "Connect";
-      document.querySelector('#connect').classList.add("btn-primary");
-      document.querySelector('#state').innerText = "Disconnected";
-      document.querySelector('#hint').innerText = "Hint: Press Connect to connect to BLE";
-      document.querySelector('#toggle').classList.add("disabled");
-      document.querySelector('#toggle').classList.remove("btn-primary");
-      document.querySelector('#update').classList.add("disabled");
-      document.querySelector('#update').classList.remove("btn-primary");
-      document.querySelector('#notify').classList.add("disabled");
-      document.querySelector('#notify').classList.remove("btn-primary");
+
+    function _send() {
+      if (!connected)
+        return;
+
+      var v = Uint8Array.of(StatusValue);
+      myCharacteristic.writeValue(v)
+        .then(_ => {
+          log('toggle done, new value is ' + StatusValue);
+        })
+        .catch(error => {
+          log(error);
+        });
     }
-  }
+
+    function _notify() {
+      if (!connected)
+        return;
+
+      myCharacteristic.startNotifications()
+        .then(_ => {
+          log('notifications started');
+          notified = true;
+          myCharacteristic.addEventListener('characteristicvaluechanged',
+            handleNotifications);
+        })
+        .catch(error => {
+          log(error);
+        });
+    }
+
+    function handleNotifications(event) {
+      let value = event.target.value;
+      StatusValue = value;
+      let a = [];
+      // Convert raw data bytes to hex values just for the sake of showing something.
+      // In the "real" world, you'd use data.getUint8, data.getUint16 or even
+      // TextDecoder to process raw data bytes.
+      for (let i = 0; i < value.byteLength; i++) {
+        a.push(('00' + value.getUint8(i).toString(16)).slice(-2));
+      }
+      log('data updated, now value is ' + a.join(' '));
+    }
+
+    function _update() {
+      if (!navigator.bluetooth) {
+        document.querySelector('#state').innerText = "Not supported!";
+        document.querySelector('#hint').innerText = "Hint: Web Bluetooth API is not available on current browser";
+        document.querySelector('#connect').classList.add("disabled");
+        document.querySelector('#toggle').classList.add("disabled");
+        document.querySelector('#send').classList.add("disabled");
+        document.querySelector('#notify').classList.add("disabled");
+        return;
+      }
+
+      if (connected) {
+        document.querySelector('#connect').onclick = _disconnect;
+        document.querySelector('#connect').innerText = "Disconnect";
+        document.querySelector('#connect').classList.remove("btn-primary");
+        document.querySelector('#state').innerText = "Connected";
+        document.querySelector('#hint').innerText = "Hint: Press Send or Recive to communicate with BLE";
+        document.querySelector('#toggle').innerText = StatusValue;
+        document.querySelector('#toggle').classList.remove("disabled");
+        document.querySelector('#toggle').classList.add("btn-primary");
+        document.querySelector('#toggle').onclick = _toggle;
+        document.querySelector('#send').classList.remove("disabled");
+        document.querySelector('#send').classList.add("btn-primary");
+        document.querySelector('#send').onclick = _send;
+        document.querySelector('#notify').innerText = "Not Reciving";
+        document.querySelector('#notify').classList.remove("disabled");
+        document.querySelector('#notify').classList.add("btn-primary");
+        document.querySelector('#notify').onclick = _notify;
+      }
+      else {
+        document.querySelector('#connect').onclick = _connect;
+        document.querySelector('#connect').innerText = "Connect";
+        document.querySelector('#connect').classList.add("btn-primary");
+        document.querySelector('#state').innerText = "Disconnected";
+        document.querySelector('#hint').innerText = "Hint: Press Connect to connect to BLE";
+        document.querySelector('#toggle').classList.add("disabled");
+        document.querySelector('#toggle').classList.remove("btn-primary");
+        document.querySelector('#send').classList.add("disabled");
+        document.querySelector('#send').classList.remove("btn-primary");
+        document.querySelector('#notify').classList.add("disabled");
+        document.querySelector('#notify').classList.remove("btn-primary");
+      }
+      if (notified) {
+        document.querySelector('#notify').innerText = "Reciving";
+        document.querySelector('#notify').classList.add("disabled");
+      }
+    }
 
   </script>
 
 </head>
+
 <body onload='_update()'>
 
-<div class="container">
-  <div class="page-header">
-    <h2>Test<br>Web BLE demo</h2>
-  </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <button id='connect' type="button" class="btn btn-block">Connect</button>
-      <br>
-      <button id='toggle' type="button" class="btn btn-block">Toggle</button>
-      <br>
-      <button id='update' type="button" class="btn btn-block">Updata</button>
-      <br>
-      <button id='notify' type="button" class="btn btn-block">Start Notifications</button>
+  <div class="container">
+    <div class="page-header">
+      <h2>Test<br>Web BLE demo</h2>
     </div>
-    <div class="col-sm-9">
-      <h4 id='state'></h4>
-      <div id='hint'></div>
-      <h4>Log:</h4>
-      <pre id='log'></pre>
+    <div class="row">
+      <div class="col-sm-3">
+        <button id='connect' type="button" class="btn btn-block">Connect</button>
+        <br>
+        <button id='toggle' type="button" class="btn btn-block">Toggle</button>
+        <br>
+        <button id='send' type="button" class="btn btn-block">Send</button>
+        <br>
+        <button id='notify' type="button" class="btn btn-block">Not Recieving</button>
+      </div>
+      <div class="col-sm-9">
+        <h4 id='state'></h4>
+        <div id='hint'></div>
+        <h4>Log:</h4>
+        <pre id='log'></pre>
+      </div>
     </div>
   </div>
-</div>
 
 </body>
+
 </html>
