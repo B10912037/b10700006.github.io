@@ -152,7 +152,7 @@
       //  a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
       //}
       //log('data received, now value is ' + a.join(' '));
-      log('data received, now value is ' + value);
+      log('data received, now value is ' + value.getUint8(0));
     }
 
     function _update() {
@@ -191,6 +191,7 @@
         document.querySelector('#state').innerText = "Disconnected";
         document.querySelector('#hint').innerText = "Hint: Press Connect to connect to BLE";
         document.querySelector('#toggle').classList.add("disabled");
+        document.querySelector('#toggle').innerText = "Value";
         document.querySelector('#toggle').classList.remove("btn-primary");
         document.querySelector('#send').classList.add("disabled");
         document.querySelector('#send').classList.remove("btn-primary");
