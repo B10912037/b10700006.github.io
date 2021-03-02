@@ -126,7 +126,7 @@
 	  
     myCharacteristic.startNotifications()
     .then(_ => {
-      log('Notifications started');
+      log('notifications started');
       myCharacteristic.addEventListener('characteristicvaluechanged',
           handleNotifications);
     })
@@ -144,7 +144,7 @@ function handleNotifications(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  log('> ' + a.join(' '));
+  log('data updated, now value is ' + a.join(' '));
 }
 
   function _update()
@@ -209,7 +209,7 @@ function handleNotifications(event) {
       <br>
       <button id='update' type="button" class="btn btn-block">Updata</button>
       <br>
-      <button id='notify' type="button" class="btn btn-block">Start NotificationsUpdata</button>
+      <button id='notify' type="button" class="btn btn-block">Start Notifications</button>
     </div>
     <div class="col-sm-9">
       <h4 id='state'></h4>
