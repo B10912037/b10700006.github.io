@@ -136,22 +136,23 @@
         .catch(error => {
           log(error);
         });
-        _update();
+      _update();
     }
 
     function handleNotifications(event) {
       let value = event.target.value;
       StatusValue = value.getUint8(0);
-      document.querySelector('#toggle').innerText = value;
+      document.querySelector('#toggle').innerText = StatusValue;
       document.querySelector('#toggle').classList.add("btn-primary");
-      let a = [];
+      //let a = [];
       // Convert raw data bytes to hex values just for the sake of showing something.
       // In the "real" world, you'd use data.getUint8, data.getUint16 or even
       // TextDecoder to process raw data bytes.
-      for (let i = 0; i < value.byteLength; i++) {
-        a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
-      }
-      log('data received, now value is ' + a.join(' '));
+      //for (let i = 0; i < value.byteLength; i++) {
+      //  a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
+      //}
+      //log('data received, now value is ' + a.join(' '));
+      log('data received, now value is ' + StatusValue);
     }
 
     function _update() {
