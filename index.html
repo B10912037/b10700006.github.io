@@ -126,7 +126,7 @@
       myCharacteristic.startNotifications()
         .then(_ => {
           log('notifications started');
-          document.querySelector('#notify').innerText = "Reciving";
+          document.querySelector('#notify').innerText = "Receiving";
           document.querySelector('#notify').classList.add("disabled");
           document.querySelector('#notify').classList.remove("btn-primary");
           notified = true;
@@ -142,7 +142,7 @@
     function handleNotifications(event) {
       let value = event.target.value;
       StatusValue = value.getUint8(0);
-      document.querySelector('#toggle').innerText = StatusValue;
+      document.querySelector('#toggle').innerText = Value;
       document.querySelector('#toggle').classList.add("btn-primary");
       let a = [];
       // Convert raw data bytes to hex values just for the sake of showing something.
@@ -151,7 +151,7 @@
       for (let i = 0; i < value.byteLength; i++) {
         a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
       }
-      log('data recived, now value is ' + a.join(' '));
+      log('data received, now value is ' + a.join(' '));
     }
 
     function _update() {
@@ -178,7 +178,7 @@
         document.querySelector('#send').classList.remove("disabled");
         document.querySelector('#send').classList.add("btn-primary");
         document.querySelector('#send').onclick = _send;
-        document.querySelector('#notify').innerText = "Not Reciving";
+        document.querySelector('#notify').innerText = "Not Receiving";
         document.querySelector('#notify').classList.remove("disabled");
         document.querySelector('#notify').classList.add("btn-primary");
         document.querySelector('#notify').onclick = _notify;
@@ -197,7 +197,7 @@
         document.querySelector('#notify').classList.remove("btn-primary");
       }
       if (notified) {
-        document.querySelector('#notify').innerText = "Reciving";
+        document.querySelector('#notify').innerText = "Receiving";
         document.querySelector('#notify').classList.add("disabled");
         document.querySelector('#notify').classList.remove("btn-primary");
       }
