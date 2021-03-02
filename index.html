@@ -142,6 +142,8 @@
     function handleNotifications(event) {
       let value = event.target.value;
       StatusValue = value.getUint8(0);
+      document.querySelector('#toggle').innerText = StatusValue;
+      document.querySelector('#toggle').classList.add("btn-primary");
       let a = [];
       // Convert raw data bytes to hex values just for the sake of showing something.
       // In the "real" world, you'd use data.getUint8, data.getUint16 or even
