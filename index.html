@@ -102,6 +102,7 @@
 
       StatusValue = StatusValue == 0 ? 1 : 0;
       document.querySelector('#toggle').innerText = StatusValue;
+      document.querySelector('#toggle').classList.add("btn-primary");
     }
 
     function _send() {
@@ -193,6 +194,7 @@
       if (notified) {
         document.querySelector('#notify').innerText = "Reciving";
         document.querySelector('#notify').classList.add("disabled");
+        document.querySelector('#notify').classList.remove("btn-primary");
       }
     }
 
