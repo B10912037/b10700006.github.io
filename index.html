@@ -101,6 +101,7 @@
         return;
 
       StatusValue = StatusValue == 0 ? 1 : 0;
+      document.querySelector('#toggle').innerText = StatusValue;
     }
 
     function _send() {
@@ -131,6 +132,7 @@
         .catch(error => {
           log(error);
         });
+        _update();
     }
 
     function handleNotifications(event) {
@@ -141,7 +143,7 @@
       // In the "real" world, you'd use data.getUint8, data.getUint16 or even
       // TextDecoder to process raw data bytes.
       for (let i = 0; i < value.byteLength; i++) {
-        a.push(('00' + value.getUint8(i).toString(16)).slice(-2));
+        a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
       }
       log('data updated, now value is ' + a.join(' '));
     }
