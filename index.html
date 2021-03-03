@@ -70,7 +70,7 @@
           document.querySelector('#notify').classList.remove("btn-primary");
           notified = true;
           myCharacteristic.addEventListener('characteristicvaluechanged',
-          handleNotifications);
+            handleNotifications);
           _update();
         })
         .catch(error => {
@@ -113,7 +113,10 @@
 
       StatusValue = StatusValue == 0 ? 1 : 0;
       document.querySelector('#toggle').innerText = StatusValue;
-      document.querySelector('#toggle').classList.add("btn-primary");
+      if (StatusValue)
+        document.querySelector('#toggle').classList.add("btn-primary");
+      else
+        document.querySelector('#toggle').classList.remove("btn-primary");
     }
 
     function _send() {
@@ -154,7 +157,10 @@
       let value = event.target.value;
       StatusValue = value.getUint8(0);
       document.querySelector('#toggle').innerText = StatusValue;
-      document.querySelector('#toggle').classList.add("btn-primary");
+      if (StatusValue)
+        document.querySelector('#toggle').classList.add("btn-primary");
+      else
+        document.querySelector('#toggle').classList.remove("btn-primary");
       //let a = [];
       // Convert raw data bytes to hex values just for the sake of showing something.
       // In the "real" world, you'd use data.getUint8, data.getUint16 or even
