@@ -53,25 +53,26 @@
           return service.getCharacteristic(_char_uuid);
         })
         .then(characteristic => {
-          log('Reading Characteristic values...');
+          //log('Reading Characteristic values...');
           myCharacteristic = characteristic;
           return characteristic.readValue();
         })
         .then(value => {
-          log('Value is ' + value.getUint8(0));
+          log('Reading Characteristic values... Value is ' + value.getUint8(0));
           connected = true;
           StatusValue = value.getUint8(0);
+          log('Starting notifications...');
           return myCharacteristic.startNotifications();
         })
         .then(_ => {
-          log('notifications started');
           document.querySelector('#notify').innerText = "Receiving";
           document.querySelector('#notify').classList.add("disabled");
           document.querySelector('#notify').classList.remove("btn-primary");
           notified = true;
           myCharacteristic.addEventListener('characteristicvaluechanged',
-            handleNotifications);
+          handleNotifications);
           _update();
+          log('Ready!');
         })
         .catch(error => {
           if (bluetoothDevice && bluetoothDevice.gatt.connected) {
@@ -126,7 +127,7 @@
       var v = Uint8Array.of(StatusValue);
       myCharacteristic.writeValue(v)
         .then(_ => {
-          log('data sent, new value is ' + StatusValue);
+          log('<< data sent, new value is ' + StatusValue);
         })
         .catch(error => {
           log(error);
@@ -169,7 +170,7 @@
       //  a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
       //}
       //log('data received, now value is ' + a.join(' '));
-      log('data received, now value is ' + value.getUint8(0));
+      log('>> data received, now value is ' + value.getUint8(0));
     }
 
     function _update() {
