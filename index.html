@@ -118,6 +118,8 @@
         document.querySelector('#toggle').classList.add("btn-primary");
       else
         document.querySelector('#toggle').classList.remove("btn-primary");
+      
+      _send();
     }
 
     function _send() {
@@ -127,7 +129,7 @@
       var v = Uint8Array.of(StatusValue);
       myCharacteristic.writeValue(v)
         .then(_ => {
-          log('<< data sent, new value is ' + StatusValue);
+          log('Oo.  data sent, new value is ' + StatusValue);
         })
         .catch(error => {
           log(error);
@@ -170,7 +172,7 @@
       //  a.push(('0' + value.getUint8(i).toString(16)).slice(-2));
       //}
       //log('data received, now value is ' + a.join(' '));
-      log('>> data received, now value is ' + value.getUint8(0));
+      log(' .oO data received, now value is ' + value.getUint8(0));
     }
 
     function _update() {
