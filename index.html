@@ -129,7 +129,7 @@
       var v = Uint8Array.of(StatusValue);
       myCharacteristic.writeValue(v)
         .then(_ => {
-          log('☜(ﾟヮﾟ☜) data sent, new value is ' + StatusValue);
+          log('☜╮__ data transmitted, now value is ' + StatusValue);
         })
         .catch(error => {
           log(error);
@@ -164,7 +164,7 @@
         document.querySelector('#toggle').classList.add("btn-primary");
       else
         document.querySelector('#toggle').classList.remove("btn-primary");
-      log('(╭☞•́⍛•̀)╭☞ data received, now value is ' + value.getUint8(0));
+      log('__╭☞ data received, new value is ' + value.getUint8(0));
     }
 
     function _update() {
