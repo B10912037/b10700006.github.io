@@ -8,7 +8,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "http://b10700006.github.io/",
+    "start_url": "https://b10700006.github.io",
     "background_color": "#000",
     "theme_color": "#536878",
     "display": "standalone"
