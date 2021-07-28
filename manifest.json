@@ -11,14 +11,12 @@
     "gcm_user_visible_only": true,
     "icons": [
         {
-            "purpose": "any",
-            "src": "/icon.png",
+            "src": "/icon-a1.png",
             "sizes": "192×192",
             "type": "image/png"
         },
         {
-            "purpose": "any",
-            "src": "/icon1.png",
+            "src": "/icon-a2.png",
             "sizes": "512×512",
             "type": "image/png"
         },
@@ -89,7 +87,7 @@
         }
     ],
     "short_name": "Web BLE",
-    "start_url": "/",
+    "start_url": "https://b10700006.githu.io",
     "theme_color": "#536878",
     "scope": "/",
     "android_package_name": "com.webble.android",
