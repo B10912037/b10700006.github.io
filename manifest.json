@@ -17,9 +17,21 @@
             "type": "image/png"
         },
         {
+            "purpose": "any",
+            "src": "/icon1.png",
+            "sizes": "512×512",
+            "type": "image/png"
+        },
+        {
             "purpose": "maskable",
             "src": "/icon.png",
             "sizes": "192×192",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "src": "/icon1.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],
