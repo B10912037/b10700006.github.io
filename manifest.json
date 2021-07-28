@@ -87,7 +87,7 @@
         }
     ],
     "short_name": "Web BLE",
-    "start_url": "https://b10700006.githu.io",
+    "start_url": "https://b10700006.githu.io/?utm_source=homescreen&utm_medium=shortcut",
     "theme_color": "#536878",
     "scope": "/",
     "android_package_name": "com.webble.android",
