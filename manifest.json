@@ -1,0 +1,15 @@
+{
+    "short_name": "Test Web BLE!",
+    "name": "Test Web BLE!",
+    "icons": [
+        {
+            "src": "icons.png",
+            "sizes": "96×96",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "http://b10700006.github.io/",
+    "background_color": "#000",
+    "theme_color": "#536878",
+    "display": "standalone"
+}
