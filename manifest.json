@@ -3,8 +3,8 @@
     "name": "Test Web BLE!",
     "icons": [
         {
-            "src": "icons.png",
-            "sizes": "96×96",
+            "src": "icon.png",
+            "sizes": "144×144",
             "type": "image/png"
         }
     ],
