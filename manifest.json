@@ -5,7 +5,8 @@
         {
             "src": "icon1.png",
             "sizes": "172×172",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         }
     ],
     "start_url": "https://b10700006.github.io",
