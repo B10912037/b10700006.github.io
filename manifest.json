@@ -3,13 +3,13 @@
     "name": "Test Web BLE!",
     "icons": [
         {
-            "src": "icon1.png",
+            "purpose": "any",
+            "src": "/icon1.png",
             "sizes": "172×172",
-            "type": "image/png",
-            "purpose": "any"
+            "type": "image/png"
         }
     ],
-    "start_url": "https://b10700006.github.io",
+    "start_url": "/",
     "background_color": "#000",
     "theme_color": "#536878",
     "display": "standalone"
