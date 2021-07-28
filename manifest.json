@@ -1,16 +1,92 @@
 {
-    "short_name": "Test Web BLE!",
-    "name": "Test Web BLE!",
+    "background_color": "#4071d9",
+    "categories": [
+        "education",
+        "productivity",
+        "utilities"
+    ],
+    "description": "用Web Bluetooth Api 取用藍牙。",
+    "display": "standalone",
+    "gcm_sender_id": "103953800507",
+    "gcm_user_visible_only": true,
     "icons": [
         {
             "purpose": "any",
-            "src": "/icon1.png",
-            "sizes": "172×172",
+            "src": "/icon.png",
+            "sizes": "192×192",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "src": "/icon.png",
+            "sizes": "192×192",
             "type": "image/png"
         }
     ],
-    "start_url": "/",
-    "background_color": "#000",
+    "name": "Test Web BLE!",
+    "screenshots": [
+        {
+            "src": "/screenshoot1.png",
+            "sizes": "960x1706",
+            "type": "image/png"
+        },
+        {
+            "src": "/screenshoot2.png",
+            "sizes": "960x1706",
+            "type": "image/png"
+        },
+        {
+            "src": "/screenshoot3.png",
+            "sizes": "960x1706",
+            "type": "image/png"
+        }
+    ],
+    "share_target": {
+        "action": "compose/tweet",
+        "enctype": "multipart/form-data",
+        "method": "POST",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url",
+            "files": [
+                {
+                    "name": "externalMedia",
+                    "accept": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/gif",
+                        "video/quicktime",
+                        "video/mp4"
+                    ]
+                }
+            ]
+        }
+    },
+    "shortcuts": [
+        {
+            "name": "探索",
+            "url": "https://www.yuntech.edu.tw/",
+            "icons": [
+                {
+                    "src": "https://abs.twimg.com/responsive-web/client-web/icon-search-stroke.5f9aa885.png",
+                    "type": "image/png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "short_name": "Web BLE",
+    "start_url": "https://b10700006.githu.io",
     "theme_color": "#536878",
-    "display": "standalone"
+    "scope": "/",
+    "android_package_name": "com.webble.android",
+    "prefer_related_applications": true,
+    "related_applications": [
+        {
+            "id": "com.twitter.android",
+            "platform": "chromeos_play",
+            "url": "https://play.google.com/store/apps/details?id=com.twitter.android"
+        }
+    ]
 }
