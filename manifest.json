@@ -17,24 +17,24 @@
     "gcm_user_visible_only": true,
     "icons": [
         {
-            "src": "https://b10700006.githu.io/icon-a1.png",
+            "src": "https://b10700006.github.io/icon-a1.png",
             "sizes": "192×192",
             "type": "image/png"
         },
         {
-            "src": "https://b10700006.githu.io/icon-a2.png",
+            "src": "https://b10700006.github.io/icon-a2.png",
             "sizes": "512×512",
             "type": "image/png"
         },
         {
             "purpose": "maskable",
-            "src": "https://b10700006.githu.io/icon.png",
+            "src": "https://b10700006.github.io/icon.png",
             "sizes": "192×192",
             "type": "image/png"
         },
         {
             "purpose": "maskable",
-            "src": "https://b10700006.githu.io/icon1.png",
+            "src": "https://b10700006.github.io/icon1.png",
             "sizes": "512x512",
             "type": "image/png"
         }
@@ -44,17 +44,17 @@
     "orientation": "portrait",
     "screenshots": [
         {
-            "src": "https://b10700006.githu.io/screenshoot1.png",
+            "src": "https://b10700006.github.io/screenshoot1.png",
             "sizes": "960x1706",
             "type": "image/png"
         },
         {
-            "src": "https://b10700006.githu.io/screenshoot2.png",
+            "src": "https://b10700006.github.io/screenshoot2.png",
             "sizes": "960x1706",
             "type": "image/png"
         },
         {
-            "src": "https://b10700006.githu.io/screenshoot3.png",
+            "src": "https://b10700006.github.io/screenshoot3.png",
             "sizes": "960x1706",
             "type": "image/png"
         }
@@ -95,7 +95,7 @@
         }
     ],
     "short_name": "Web BLE",
-    "start_url": "https://b10700006.githu.io/?utm_source=homescreen&utm_medium=shortcut",
+    "start_url": "https://b10700006.github.io/?utm_source=homescreen&utm_medium=shortcut",
     "theme_color": "#536878",
     "scope": "/",
     "android_package_name": "com.webble.android",
