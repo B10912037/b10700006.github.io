@@ -7,13 +7,12 @@
 var cacheAll = false;
 var CACHE_NAME = 'webapk-cache';
 var urlsToCache = [
-	'/WebAPK/',
-	'/WebAPK/index.html',
-	'/WebAPK/logo.png',
-	'/WebAPK/manifest.json',
-	'/WebAPK/css/main.css',
-	'/WebAPK/js/main.js',
-	'/WebAPK/js/jquery.min.js'
+	'/',
+	'/index.html',
+	'/icon.png',
+	'/manifest.json',
+	'/js/main.js',
+	'/js/jquery.min.js'
 ];
 var urlsNotToCache = [
 	// Urls that don't need to be cached can be added here explicitly
