@@ -4,7 +4,7 @@
 <head>
   <title>Test Web BLE</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,7 +22,7 @@
     }
   </script>
 
-  <intent-filter>
+  <!-- <intent-filter>
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
     <category android:name="android.intent.category.BROWSABLE" />
@@ -30,7 +30,7 @@
     android:scheme="https"
     android:host="example.com"
     android:pathPrefix="/" />
-  </intent-filter>
+  </intent-filter> -->
 
   <script>
 
@@ -251,6 +251,10 @@
 
   <div class="container">
     <div class="page-header">
+      <!-- for Web Apk -->
+      <span id="connection"><abbr title="You are online!">&#128246;</abbr></span>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/main.js"></script>
       <h2>
         Test-0728
         <br>
