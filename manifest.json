@@ -65,6 +65,19 @@
         }
     },
     "short_name": "Web BLE",
+    "shortcuts": [
+        {
+            "name": "探索",
+            "url": "https://www.yuntech.edu.tw/?utm_source=homescreen&utm_medium=shortcut",
+            "icons": [
+                {
+                    "src": "https://abs.twimg.com/responsive-web/client-web/icon-search-stroke.5f9aa885.png",
+                    "type": "image/png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
     "start_url": "https://b10700006.github.io/?utm_source=homescreen&utm_medium=shortcut",
     "theme_color": "#536878",
     "scope": "/",
