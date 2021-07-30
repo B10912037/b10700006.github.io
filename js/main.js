@@ -33,7 +33,7 @@ function init(){
 	window.addEventListener("beforeinstallprompt",function(event){
 		console.log("[*] WebAPK install event fired!");
 		// var btn = $("<button>install</button>");
-		var btn = $("<button id='install' type="button" class="btn btn-block">Install</button>");
+		var btn = $("<button id='install' type=\"button\" class=\"btn btn-block\">Install</button>");
 		$("body").append(btn);
 		btn.click(function(e){
 			event.prompt();
