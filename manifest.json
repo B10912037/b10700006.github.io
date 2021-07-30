@@ -1,4 +1,10 @@
 {
+    "applications": {
+		"gecko": {
+			"id": "addon@example.com"
+		}
+	},
+    "author": "B10700006",
     "background_color": "#4071d9",
     "categories": [
         "education",
@@ -33,7 +39,9 @@
             "type": "image/png"
         }
     ],
+    "manifest_version": 729,
     "name": "Test Web BLE!",
+    "orientation": "portrait",
     "screenshots": [
         {
             "src": "https://b10700006.githu.io/screenshoot1.png",
@@ -98,5 +106,6 @@
             "platform": "chromeos_play",
             "url": "https://play.google.com/store/apps/details?id=com.twitter.android"
         }
-    ]
+    ],
+    "version": "0729"
 }
