@@ -11,24 +11,24 @@
     "gcm_user_visible_only": true,
     "icons": [
         {
-            "src": "/icon-a1.png",
+            "src": "https://b10700006.githu.io/icon-a1.png",
             "sizes": "192×192",
             "type": "image/png"
         },
         {
-            "src": "/icon-a2.png",
+            "src": "https://b10700006.githu.io/icon-a2.png",
             "sizes": "512×512",
             "type": "image/png"
         },
         {
             "purpose": "maskable",
-            "src": "/icon.png",
+            "src": "https://b10700006.githu.io/icon.png",
             "sizes": "192×192",
             "type": "image/png"
         },
         {
             "purpose": "maskable",
-            "src": "/icon1.png",
+            "src": "https://b10700006.githu.io/icon1.png",
             "sizes": "512x512",
             "type": "image/png"
         }
@@ -36,17 +36,17 @@
     "name": "Test Web BLE!",
     "screenshots": [
         {
-            "src": "/screenshoot1.png",
+            "src": "https://b10700006.githu.io/screenshoot1.png",
             "sizes": "960x1706",
             "type": "image/png"
         },
         {
-            "src": "/screenshoot2.png",
+            "src": "https://b10700006.githu.io/screenshoot2.png",
             "sizes": "960x1706",
             "type": "image/png"
         },
         {
-            "src": "/screenshoot3.png",
+            "src": "https://b10700006.githu.io/screenshoot3.png",
             "sizes": "960x1706",
             "type": "image/png"
         }
