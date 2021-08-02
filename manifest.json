@@ -24,7 +24,7 @@
     ],
     "manifest_version": 801,
     "name": "Test Web BLE!",
-    "orientation": "portrait-primary",
+    "orientation": "any",
     "screenshots": [
         {
             "src": "https://b10700006.github.io/screenshoot1.png",
