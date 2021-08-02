@@ -22,9 +22,9 @@
 			"type": "image/png"
         }
     ],
-    "manifest_version": 729,
+    "manifest_version": 801,
     "name": "Test Web BLE!",
-    "orientation": "portrait",
+    "orientation": "portrait-primary",
     "screenshots": [
         {
             "src": "https://b10700006.github.io/screenshoot1.png",
