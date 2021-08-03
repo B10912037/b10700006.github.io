@@ -72,6 +72,7 @@ function init(){
 		.then(choice => {
 			if (choice.outcome === 'accepted') {
 				console.log('User accepted');
+				document.querySelector('#install').classList.add("btn-success");
 				document.querySelector('#install').classList.add("disabled");
 				document.querySelector('#install').innerText = "Installed";
 			} else {
