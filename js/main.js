@@ -73,7 +73,7 @@ function init(){
 			if (choice.outcome === 'accepted') {
 				console.log('User accepted');
 				document.querySelector('#install').classList.add("disabled");
-				document.querySelector('#install').innerText = "Install";
+				document.querySelector('#install').innerText = "Installed";
 			} else {
 				console.log('User dismissed');
 				document.querySelector('#install').classList.add("btn-primary");
