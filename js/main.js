@@ -41,7 +41,7 @@ function init(){
 		btn.click(function(e){
 			event.prompt();
 			// btn.remove();
-			document.querySelector('#install').classList.add("disabled");
+			// document.querySelector('#install').classList.add("disabled");
 			document.querySelector('#install').classList.remove("btn-primary");
 		});
 	});
