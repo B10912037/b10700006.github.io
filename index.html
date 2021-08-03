@@ -11,27 +11,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <!-- <script>
-    if ('serviceWorker' in navigator) {
-      console.log("Will service worker register?");
-      navigator.serviceWorker.register('service-worker.js').then(function(reg) {
-        console.log("Yes it did.");
-      }).catch(function(err){
-        console.log("No it didn't. This happened: ", err)
-      });
-    }
-  </script> -->
-
-  <!-- <intent-filter>
-    <action android:name="android.intent.action.VIEW" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <data
-    android:scheme="https"
-    android:host="example.com"
-    android:pathPrefix="/" />
-  </intent-filter> -->
-
   <script>
 
     var _serv_uuid = '0000FFF0-0000-1000-8000-00805F9B34FB'.toLowerCase();
@@ -193,6 +172,7 @@
       if (!navigator.bluetooth) {
         document.querySelector('#state').innerText = "Not supported!";
         document.querySelector('#hint').innerText = "Hint: Web Bluetooth API is not available on current browser";
+        document.querySelector('#install').classList.add("disabled");
         document.querySelector('#connect').classList.add("disabled");
         document.querySelector('#toggle').classList.add("disabled");
         //document.querySelector('#send').classList.add("disabled");
@@ -222,6 +202,7 @@
         //document.querySelector('#notify').onclick = _notify;
       }
       else {
+        document.querySelector('#install').classList.add("disabled");
         document.querySelector('#connect').onclick = _connect;
         document.querySelector('#connect').innerText = "Connect";
         document.querySelector('#connect').classList.add("btn-primary");
@@ -256,13 +237,15 @@
       <script src="js/jquery.min.js"></script>
       <script src="js/main.js"></script>
       <h2>
-        Test-0802
+        Test-0803
         <br>
         Web BLE demo
       </h2>
     </div>
     <div class="row">
       <div class="col-sm-3">
+        <button id='install' type="button" class="btn btn-block">Install</button>
+        <br>
         <button id='connect' type="button" class="btn btn-block">Connect</button>
         <br>
         <button id='notify' type="button" class="btn btn-block">Not Recieving</button>
