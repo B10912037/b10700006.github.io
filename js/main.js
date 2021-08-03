@@ -51,7 +51,7 @@ function init(){
 	
     // Capture event and defer
     window.addEventListener('beforeinstallprompt', function (e) {
-		document.querySelector('#install').classList.remove("disabled");
+		document.querySelector('#install').show();
 		document.querySelector('#install').classList.add("btn-primary");
         e.preventDefault();
         promptEvent = e;
