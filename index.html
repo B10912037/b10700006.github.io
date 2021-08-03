@@ -172,7 +172,8 @@
       if (!navigator.bluetooth) {
         document.querySelector('#state').innerText = "Not supported!";
         document.querySelector('#hint').innerText = "Hint: Web Bluetooth API is not available on current browser";
-        document.querySelector('#install').hide();
+        $("#install").hide();
+        // document.querySelector('#install').classList.add("disabled");
         document.querySelector('#connect').classList.add("disabled");
         document.querySelector('#toggle').classList.add("disabled");
         //document.querySelector('#send').classList.add("disabled");
@@ -202,7 +203,8 @@
         //document.querySelector('#notify').onclick = _notify;
       }
       else {
-        document.querySelector('#install').hide();
+        $("#install").hide();
+        // document.querySelector('#install').classList.add("disabled");
         document.querySelector('#connect').onclick = _connect;
         document.querySelector('#connect').innerText = "Connect";
         document.querySelector('#connect').classList.add("btn-primary");
