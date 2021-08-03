@@ -29,6 +29,7 @@ function init(){
 	}
 	else console.log("[*] ServiceWorker not supported by your browser!");
 	
+	/*
 	// Trigger install prompt for WebAPK
 	window.addEventListener("beforeinstallprompt",function(event){
 		console.log("[*] WebAPK install event fired!");
@@ -44,7 +45,41 @@ function init(){
 			// document.querySelector('#install').classList.add("disabled");
 			document.querySelector('#install').classList.remove("btn-primary");
 		});
-	});
+	});*/
+	
+	var promptEvent; 
+	
+    // Capture event and defer
+    window.addEventListener('beforeinstallprompt', function (e) {
+		document.querySelector('#install').classList.remove("disabled");
+		document.querySelector('#install').classList.add("btn-primary");
+        e.preventDefault();
+        promptEvent = e;
+        listenToUserAction();
+    });
+	
+    // listen to install button clic
+    function listenToUserAction() {
+		const installBtn = document.querySelector("#install");
+        installBtn.addEventListener("click", presentAddToHome);
+    }
+    
+    // present install prompt to user
+    function presentAddToHome() {
+		promptEvent.prompt();  // Wait for the user to respond to the prompt
+		document.querySelector('#install').classList.remove("btn-primary");
+        promptEvent.userChoice
+		.then(choice => {
+			if (choice.outcome === 'accepted') {
+				console.log('User accepted');
+				document.querySelector('#install').classList.add("disabled");
+				document.querySelector('#install').innerText = "Install";
+			} else {
+				console.log('User dismissed');
+				document.querySelector('#install').classList.add("btn-primary");
+              }
+          })
+    }
 	
 	// Initialize online/offline detection
 	checkOnlineStatus();
