@@ -22,23 +22,23 @@
 			"type": "image/png"
         }
     ],
-    "manifest_version": 801,
+    "manifest_version": 729,
     "name": "Test Web BLE!",
-    "orientation": "any",
+    "orientation": "portrait",
     "screenshots": [
         {
             "src": "https://b10700006.github.io/screenshoot1.png",
-            "sizes": "960x1706",
+            "sizes": "1080x1920",
             "type": "image/png"
         },
         {
             "src": "https://b10700006.github.io/screenshoot2.png",
-            "sizes": "960x1706",
+            "sizes": "1080x1920",
             "type": "image/png"
         },
         {
             "src": "https://b10700006.github.io/screenshoot3.png",
-            "sizes": "960x1706",
+            "sizes": "1080x1920",
             "type": "image/png"
         }
     ],
