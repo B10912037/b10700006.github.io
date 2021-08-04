@@ -68,7 +68,7 @@
     "shortcuts": [
         {
             "name": "探索",
-            "url": "/firework?utm_source=jumplist&utm_medium=shortcut",
+            "url": "/fireworks?utm_source=jumplist&utm_medium=shortcut",
             "icons": [
                 {
                     "src": "https://abs.twimg.com/responsive-web/client-web/icon-search-stroke.5f9aa885.png",
