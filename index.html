@@ -37,7 +37,7 @@
       navigator.bluetooth.requestDevice({
         // filters: [...] <- Prefer filters to save energy & show relevant devices.
         filters: [{name: ['SimpleBLEPeripheral'] }],
-        acceptAllDevices: true,
+        //acceptAllDevices: true,
         optionalServices: [_serv_uuid]
       })
         .then(device => {
