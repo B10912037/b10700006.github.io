@@ -193,22 +193,32 @@
       let volt = va / 4096 * 3.3;
       document.querySelector('#adc').innerText = volt.toFixed(2) + "V";
       // document.querySelector('#adc').classList.;
-      if(volt<2)
+      if(volt<1)
       {
+        document.querySelector('#adc').classList.remove("btn-info");
+        document.querySelector('#adc').classList.remove("btn-warning");
+        document.querySelector('#adc').classList.remove("btn-danger");
+        document.querySelector('#adc').classList.add("btn-success");
+      }
+      else if(volt>=1 & volt<2)
+      {
+        document.querySelector('#adc').classList.remove("btn-success");
         document.querySelector('#adc').classList.remove("btn-warning");
         document.querySelector('#adc').classList.remove("btn-danger");
         document.querySelector('#adc').classList.add("btn-info");
       }
       else if(volt>=2 & volt<3)
       {
+        document.querySelector('#adc').classList.remove("btn-success");
         document.querySelector('#adc').classList.remove("btn-info");
         document.querySelector('#adc').classList.remove("btn-danger");
         document.querySelector('#adc').classList.add("btn-warning");
       }
       else
       {
-        document.querySelector('#adc').classList.remove("btn-warning");
+        document.querySelector('#adc').classList.remove("btn-success");
         document.querySelector('#adc').classList.remove("btn-info");
+        document.querySelector('#adc').classList.remove("btn-warning");
         document.querySelector('#adc').classList.add("btn-danger");
       }
     }
