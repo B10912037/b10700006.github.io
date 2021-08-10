@@ -22,7 +22,7 @@
 			"type": "image/png"
         }
     ],
-    "manifest_version": 804,
+    "manifest_version": 810,
     "name": "Test Web BLE!",
     "orientation": "portrait",
     "screenshots": [
@@ -67,6 +67,17 @@
     "short_name": "Web BLE",
     "shortcuts": [
         {
+            "name": "IO控制",
+            "url": "/index0804?utm_source=jumplist&utm_medium=shortcut",
+            "icons": [
+                {
+                    "src": "https://abs.twimg.com/responsive-web/client-web/icon-notifications-stroke.429602d5.png",
+                    "type": "image/png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
             "name": "探索",
             "url": "/fireworks?utm_source=jumplist&utm_medium=shortcut",
             "icons": [
@@ -90,5 +101,5 @@
             "url": "https://play.google.com/store/apps/details?id=com.twitter.android"
         }
     ],
-    "version": "0804"
+    "version": "0810"
 }
