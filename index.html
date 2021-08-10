@@ -9,7 +9,9 @@
   <link rel="icon" href="icon.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <script>
 
@@ -60,7 +62,11 @@
           return characteristic.readValue();
         })
         .then(value => {
-          log('Reading Characteristic values... Value is ' + value.getUint8(0));
+          let v1=value.getUint8(0);
+          let v2=value.getUint8(1);
+          let va=v1+v2*0x100;
+          $('input').attr('value', va);
+          log('Reading Characteristic values... Value is ' + va);
           connected = true;
           StatusValue = value.getUint8(0);
           log('Starting notifications...');
@@ -128,10 +134,24 @@
       if (!connected)
         return;
 
-      var v = Uint8Array.of(StatusValue);
+      var v = Uint8Array.of(7);
       myCharacteristic.writeValue(v)
         .then(_ => {
           log('☜╮__ data transmitted, now value is ' + StatusValue);
+        })
+        .catch(error => {
+          log(error);
+        });
+    }
+
+    function _show() {
+      if (!connected)
+        return;
+
+      let v = Uint16Array.of(document.querySelector('#input').value);
+      myCharacteristic.writeValue(v)
+        .then(_ => {
+          log('☜╮__ data transmitted, now value is ' + v);
         })
         .catch(error => {
           log(error);
@@ -160,13 +180,37 @@
 
     function handleNotifications(event) {
       let value = event.target.value;
-      StatusValue = value.getUint8(0);
-      document.querySelector('#toggle').innerText = StatusValue;
-      if (StatusValue)
-        document.querySelector('#toggle').classList.add("btn-primary");
+      // StatusValue = value.getUint8(0);
+      // document.querySelector('#toggle').innerText = StatusValue;
+      // if (StatusValue)
+      //   document.querySelector('#toggle').classList.add("btn-primary");
+      // else
+      //   document.querySelector('#toggle').classList.remove("btn-primary");
+      // log('__╭☞ data received, new value is ' + value.getUint8(0));
+      let v1=value.getUint8(2);
+      let v2=value.getUint8(3);
+      let va=v1+v2*0x100;
+      let volt = va / 4096 * 3.3;
+      document.querySelector('#adc').innerText = volt.toFixed(2) + "V";
+      // document.querySelector('#adc').classList.;
+      if(volt<2)
+      {
+        document.querySelector('#adc').classList.remove("btn-warning");
+        document.querySelector('#adc').classList.remove("btn-danger");
+        document.querySelector('#adc').classList.add("btn-info");
+      }
+      else if(volt>=2 & volt<3)
+      {
+        document.querySelector('#adc').classList.remove("btn-info");
+        document.querySelector('#adc').classList.remove("btn-danger");
+        document.querySelector('#adc').classList.add("btn-warning");
+      }
       else
-        document.querySelector('#toggle').classList.remove("btn-primary");
-      log('__╭☞ data received, new value is ' + value.getUint8(0));
+      {
+        document.querySelector('#adc').classList.remove("btn-warning");
+        document.querySelector('#adc').classList.remove("btn-info");
+        document.querySelector('#adc').classList.add("btn-danger");
+      }
     }
 
     function _update() {
@@ -174,11 +218,13 @@
         document.querySelector('#state').innerText = "Not supported!";
         document.querySelector('#hint').innerText = "Hint: Web Bluetooth API is not available on current browser";
         $("#install").hide();
-        // document.querySelector('#install').classList.add("disabled");
         document.querySelector('#connect').classList.add("disabled");
-        document.querySelector('#toggle').classList.add("disabled");
-        //document.querySelector('#send').classList.add("disabled");
         document.querySelector('#notify').classList.add("disabled");
+        $('input').attr('readonly', true);
+        document.querySelector('#show').classList.add("disabled");
+        document.querySelector('#adc').classList.add("disabled");
+        $("#toggle").hide();
+        // document.querySelector('#toggle').classList.add("disabled");
         return;
       }
 
@@ -186,45 +232,44 @@
         document.querySelector('#connect').onclick = _disconnect;
         document.querySelector('#connect').innerText = "Disconnect";
         document.querySelector('#connect').classList.remove("btn-primary");
+        $('input').attr('readonly', false);
+        // $('input').attr('value', '0810');
+        document.querySelector('#show').onclick = _show;
+        document.querySelector('#show').classList.remove("disabled");
+        document.querySelector('#show').classList.add("btn-primary");
+        document.querySelector('#adc').classList.remove("disabled");
+        document.querySelector('#adc').classList.add("btn-info");
         document.querySelector('#state').innerText = "Connected";
         document.querySelector('#hint').innerText = "Hint: Press Send or Recive to communicate with BLE";
-        document.querySelector('#toggle').innerText = StatusValue;
-        document.querySelector('#toggle').classList.remove("disabled");
-        if (StatusValue == 1)
-          document.querySelector('#toggle').classList.add("btn-primary");
-        else
-          document.querySelector('#toggle').classList.remove("btn-primary");
-        document.querySelector('#toggle').onclick = _toggle;
-        // document.querySelector('#send').classList.remove("disabled");
-        // document.querySelector('#send').classList.add("btn-primary");
-        // document.querySelector('#send').onclick = _send;
-        //document.querySelector('#notify').innerText = "Not Receiving";
-        //document.querySelector('#notify').classList.remove("disabled");
-        //document.querySelector('#notify').classList.add("btn-primary");
-        //document.querySelector('#notify').onclick = _notify;
+        // document.querySelector('#toggle').innerText = StatusValue;
+        // document.querySelector('#toggle').classList.remove("disabled");
+        // if (StatusValue == 1)
+        //   document.querySelector('#toggle').classList.add("btn-primary");
+        // else
+        //   document.querySelector('#toggle').classList.remove("btn-primary");
+        // document.querySelector('#toggle').onclick = _toggle;
       }
       else {
         $("#install").hide();
-        // document.querySelector('#install').classList.add("disabled");
         document.querySelector('#connect').onclick = _connect;
         document.querySelector('#connect').innerText = "Connect";
         document.querySelector('#connect').classList.add("btn-primary");
         document.querySelector('#state').innerText = "Disconnected";
         document.querySelector('#hint').innerText = "Hint: Press Connect to connect to BLE";
-        document.querySelector('#toggle').classList.add("disabled");
-        document.querySelector('#toggle').innerText = "Value";
-        document.querySelector('#toggle').classList.remove("btn-primary");
-        // document.querySelector('#send').classList.add("disabled");
-        // document.querySelector('#send').classList.remove("btn-primary");
+        $("#toggle").hide();
+        // document.querySelector('#toggle').classList.add("disabled");
+        // document.querySelector('#toggle').innerText = "Value";
+        // document.querySelector('#toggle').classList.remove("btn-primary");
         document.querySelector('#notify').classList.add("disabled");
+        document.querySelector('#notify').classList.remove("btn-primary");
         document.querySelector('#notify').innerText = "Not Receiving";
-        document.querySelector('#notify').classList.remove("btn-primary");
+        $('input').attr('readonly', true);
+        $('input').attr('value', '');
+        document.querySelector('#show').classList.add("disabled");
+        document.querySelector('#show').classList.remove("btn-primary");
+        document.querySelector('#adc').classList.add("disabled");
+        document.querySelector('#adc').classList.remove("btn-info");
       }
-      /*if (notified) {
-        document.querySelector('#notify').innerText = "Receiving";
-        document.querySelector('#notify').classList.add("disabled");
-        document.querySelector('#notify').classList.remove("btn-primary");
-      }*/
     }
 
   </script>
@@ -240,7 +285,7 @@
       <script src="js/jquery.min.js"></script>
       <script src="js/main.js"></script>
       <h2>
-        Test-0803
+        Test-0810
         <br>
         Web BLE demo
       </h2>
@@ -250,6 +295,12 @@
         <button id='connect' type="button" class="btn btn-block">Connect</button>
         <br>
         <button id='notify' type="button" class="btn btn-block">Not Recieving</button>
+        <br>
+        <button id='adc' type="button" class="btn btn-block">ADC</button>
+        <br>
+        <input  id="input" type="text" class="form-control" value=0810 placeholder="Enter 0~9999" readonly=true>
+        <br>
+        <button id='show' type="button" class="btn btn-block">Show</button>
         <br>
         <button id='toggle' type="button" class="btn btn-block">Value</button>
         <br>
