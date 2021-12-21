@@ -190,7 +190,7 @@
       let v1=value.getUint8(2);
       let v2=value.getUint8(3);
       let va=v1+v2*0x100;
-      let volt = va / 4096 * 4.3;
+      let volt = va / 4095 * 3.3;
       //let volt = va / 4095 * 3.3;
       document.querySelector('#adc').innerText = volt.toFixed(1) + "V";
       //document.querySelector('#adc').innerText = volt.toFixed(2) + "V";
