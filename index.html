@@ -349,7 +349,7 @@
                 lastResult = decodedText;
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
-                document.querySelector('#qr-reader-results').innerText = decodedResult;
+                document.querySelector('#qr-reader-results').innerText = `Scan result ${decodedText}`, decodedResult;
             }
         }
 
