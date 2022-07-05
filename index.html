@@ -222,6 +222,26 @@
       _update();
     }
 
+    function _scan() {
+      var resultContainer = document.getElementById('qr-reader-results');
+      var lastResult, countResults = 0;
+      function onScanSuccess(decodedText, decodedResult) {
+          if (decodedText !== lastResult) {
+              ++countResults;
+              lastResult = decodedText;
+              // Handle on success condition with the decoded message.
+              console.log(`Scan result ${decodedText}`, decodedResult);
+              document.querySelector('#qr-reader-results').innerText = "ID : " + decodedResult.decodedText;
+              html5QrcodeScanner.clear();
+              $("#scan").show();
+          }
+      }
+      var html5QrcodeScanner = new Html5QrcodeScanner(
+          "qr-reader", { fps: 10, qrbox: 250 });
+      html5QrcodeScanner.render(onScanSuccess);
+      $("#scan").hide();
+    }
+
     function handleNotifications(event) {
       let value = event.target.value;
       // StatusValue = value.getUint8(0);
@@ -324,11 +344,10 @@
         document.querySelector('#adc').classList.add("disabled");
         document.querySelector('#adc').classList.remove("btn-info");
       }
+      document.querySelector('#scan').onclick = _scan;
+      document.querySelector('#scan').classList.add("btn-primary");
     }
 
-  </script>
-
-  <script>
     function docReady(fn) {
         // see if DOM is already available
         if (document.readyState === "complete"
@@ -349,32 +368,18 @@
                 lastResult = decodedText;
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
-                document.querySelector('#qr-reader-results').innerText = decodedResult.decodedText;
-                html5QrcodeScanner.stop();
+                document.querySelector('#qr-reader-results').innerText = "ID : " + decodedResult.decodedText;
                 html5QrcodeScanner.clear();
-                var html5QrcodeScanner = new Html5QrcodeScanner(
-                    "qr-reader", { fps: 10, qrbox: 250 });
-                html5QrcodeScanner.render(onScanSuccess);
-                // document.querySelector('#qr-reader-results').innerText = `Scan result ${decodedText}`, decodedResult;
+                $("#scan").show();
             }
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", { fps: 10, qrbox: 250 });
         html5QrcodeScanner.render(onScanSuccess);
+        $("#scan").hide();
     });
   </script>
-
-  <!-- <script>
-    function onScanSuccess(decodedText, decodedResult) {
-      console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    window.onload = function () {
-      var html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader", { fps: 10, qrbox: 250 });
-      html5QrcodeScanner.render(onScanSuccess);
-    };
-  </script> -->
 
 </head>
 
@@ -411,22 +416,8 @@
         <button id='send' type="button" class="btn btn-block">Send</button> -->
       </div>
       <div class="col-sm-9">
-        <!-- <h3 id="Scan ID">Demo</h3>
-        <div id="qr-reader" style="width: 600px; margin: auto; position: relative; padding: 0px; border: 1px solid silver;">
-        <div style="text-align: left; margin: 0px; padding: 5px; font-size: 20px; border-bottom: 1px solid rgba(192, 192, 192, 0.18);">
-        <span><a href="https://github.com/mebjas/html5-qrcode">Code Scanner</a></span>
-        <span id="qr-reader__status_span" style="float: right; padding: 5px 7px; font-size: 14px; background: rgb(238, 238, 255) none repeat scroll 0% 0%; border: 1px solid rgba(0, 0, 0, 0); color: rgb(17, 17, 17);">Idle</span>
-        <div id="qr-reader__header_message" style="display: none; font-size: 14px; padding: 2px 10px; margin-top: 4px; border-top: 1px solid rgb(246, 246, 246);"></div></div>
-        <div id="qr-reader__scan_region" style="width: 100%; min-height: 100px; text-align: center;">
-        <br><img style="opacity: 0.3;" src="QR%20and%20barcode%20scanner%20using%20HTML%20and%20Javascript%20Minhaz%E2%80%99s%20Blog_files/camera-scan.gif" width="64"></div>
-        <div id="qr-reader__dashboard" style="width: 100%;"><div id="qr-reader__dashboard_section" style="width: 100%; padding: 10px; text-align: left;"><div>
-        <div id="qr-reader__dashboard_section_csr" style="display: block;"><div style="text-align: center;">
-        <button>Request Camera Permissions</button></div></div><div id="qr-reader__dashboard_section_fsr" style="text-align: center; display: none;">
-        <input id="qr-reader__filescan_input" accept="image/*" type="file" style="width: 200px;" disabled="disabled"><span>&nbsp; Select Image</span></div></div><div style="text-align: center;">
-        <a style="text-decoration: underline;" id="qr-reader__dashboard_section_swaplink" href="#scan-using-file">Scan an Image File</a></div></div></div></div>
-        <div id="reader" style="display: inline-block;"></div>
-        <div class="empty"></div>
-        <div id="scanned-result"></div> -->
+        <button id='scan' type="button" class="btn btn-lg btn-block">Scan ID</button>
+        <br>
         <div id="qr-reader" style="width: 360px"></div>
         <div id="qr-reader-results"></div>
         <h4 id='state'></h4>
