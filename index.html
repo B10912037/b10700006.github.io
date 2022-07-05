@@ -350,6 +350,7 @@
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
                 document.querySelector('#qr-reader-results').innerText = decodedResult.decodedText;
+                html5QrcodeScanner.stop();
                 // document.querySelector('#qr-reader-results').innerText = `Scan result ${decodedText}`, decodedResult;
             }
         }
@@ -422,7 +423,7 @@
         <div id="reader" style="display: inline-block;"></div>
         <div class="empty"></div>
         <div id="scanned-result"></div> -->
-        <div id="qr-reader" style="width:500px"></div>
+        <div id="qr-reader" style="width: 360px"></div>
         <div id="qr-reader-results"></div>
         <h4 id='state'></h4>
         <div id='hint'></div>
