@@ -350,7 +350,7 @@
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
                 document.querySelector('#qr-reader-results').innerText = decodedResult.decodedText;
-                html5QrcodeScanner.stop();
+                html5QrcodeScanner.clear();
                 // document.querySelector('#qr-reader-results').innerText = `Scan result ${decodedText}`, decodedResult;
             }
         }
