@@ -351,6 +351,8 @@
                 console.log(`Scan result ${decodedText}`, decodedResult);
                 document.querySelector('#qr-reader-results').innerText = decodedResult.decodedText;
                 html5QrcodeScanner.clear();
+                var html5QrcodeScanner = new Html5QrcodeScanner(
+                    "qr-reader", { fps: 10, qrbox: 250 });
                 html5QrcodeScanner.render(onScanSuccess);
                 // document.querySelector('#qr-reader-results').innerText = `Scan result ${decodedText}`, decodedResult;
             }
